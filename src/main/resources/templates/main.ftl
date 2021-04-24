@@ -1,4 +1,6 @@
+<#include "parts/security.ftl">
 <#import "parts/common.ftl" as c>
+
 <@c.page>
     <div class="form-group">
         <form method="post" enctype="multipart/form-data" class="form-inline">
@@ -14,18 +16,24 @@
         </form>
     </div>
     <div class="card-columns" style="column-count: 5;">
-        <#list messages as message>
-            <div class="card my-3">
-                <img class="card-img-top" src="static/FILE.png" alt="File image">
-                <div class="card-body">
-                    <h5 class="card-title">${message.fileName!""}</h5>
-                    <p class="card-text"><span>${message.text}</span></p>
-                    <p class="card-text">${message.authorName}</p>
-                    <a href="#" class="btn btn-primary">Download</a>
+        <form action="@{lien}" method="get">
+            <input type="hidden" name="filter" value="${name}"/>
+            <#list messages as message>
+                <#if name=message.authorName>
+                <div class="card my-3">
+                    <img class="card-img-top" src="static/FILE.png" alt="File image">
+                    <div class="card-body">
+                        <h5 class="card-title">${message.fileName!""}</h5>
+                        <p class="card-text"><span>${message.text}</span></p>
+                        <p class="card-text">${message.authorName}</p>
+                        <a href="#" class="btn btn-primary">Download</a>
+                    </div>
                 </div>
-            </div>
-        <#else>
-            No message
-        </#list>
+                </#if>
+            <#else>
+                No message
+
+            </#list>
+        </form>
     </div>
 </@c.page>
