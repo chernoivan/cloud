@@ -22,6 +22,8 @@ public class Message {
 
     private String fileName;
 
+    private String fileInitialName;
+
     public Message() {
     }
 
@@ -36,5 +38,6 @@ public class Message {
     public Message(String text, User user) {
         this.author = user;
         this.text = text;
+
     }
 }

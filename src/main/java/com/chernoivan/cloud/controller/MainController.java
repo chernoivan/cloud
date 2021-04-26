@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,7 +34,7 @@ public class MainController {
     public String main(Map<String, Object> model, String userName) {
         Iterable<Message> messages = messageRepository.findAll();
 
-        if(userName != null) {
+        if (userName != null) {
             messages = messageRepository.findByAuthor(userName);
         }
 
@@ -53,14 +52,17 @@ public class MainController {
     ) throws IOException {
         Message message = new Message(text, user);
 
+
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
 
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             }
+            message.setFileInitialName(file.getOriginalFilename());
 
             String uuidFile = UUID.randomUUID().toString();
+
             String resultFilename = uuidFile + "." + file.getOriginalFilename();
 
             file.transferTo(new File(uploadPath + "/" + resultFilename));
